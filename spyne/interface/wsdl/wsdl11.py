@@ -326,12 +326,10 @@ class Wsdl11(XmlSchema):
                 part = SubElement(message, WSDL11("part"))
                 #part.set('name', obj.get_wsdl_part_name())
                 part.set('name', "parameter")
-                text = obj.get_element_name_ns(self.interface)
-                import ipdb; ipdb.set_trace()
-                if not text.endswith("Response"):
-                    text = f"{text}Request"
+                text = f"{obj.get_element_name_ns(self.interface)}Request"
+                text = text.replace("ResponseRequest", "Response")
 
-                part.set('element', text.replace("tns:", "m:"))
+                part.set('element', text)
 
     def add_messages_for_methods(self, service, root, messages):
         for method in service.public_methods.values():
