@@ -328,7 +328,7 @@ class Wsdl11(XmlSchema):
                 part.set('name', "parameter")
                 text = obj.get_element_name_ns(self.interface)
                 if not text.endswith("Response"):
-                    text = f"{obj.get_element_name_ns(self.interface)}Request"
+                    text = f"{text}Request"
                 part.set('element', text.replace("tns:", "m:"))
 
     def add_messages_for_methods(self, service, root, messages):
