@@ -326,8 +326,9 @@ class Wsdl11(XmlSchema):
                 part = SubElement(message, WSDL11("part"))
                 #part.set('name', obj.get_wsdl_part_name())
                 part.set('name', "parameter")
-                #text = f"{obj.get_element_name_ns(self.interface)}Request"
-                text = f"{obj.get_wsdl_part_name()}Request"
+                text = f"{obj.get_element_name_ns(self.interface)}Request"
+                #text = f"{obj.get_wsdl_part_name()}Request"
+                
                 text = text.replace("ResponseRequest", "Response")
 
                 part.set('element', text)
