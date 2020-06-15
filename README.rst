@@ -3,6 +3,11 @@ released yet! Latest stable release can be found in the ``2_12`` branch.
 
 If you like and use Spyne, star it on `Github <https://github.com/arskom/spyne>`_!
 
+About fork
+=====
+
+Added details on the design of the wsdl scheme. For example, to redefine the targetNameSpace prefix (by default 'tns') or the name tag for parts in messages
+
 About
 =====
 
