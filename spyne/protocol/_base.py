@@ -216,7 +216,6 @@ class ProtocolMixin(object):
         The first element in the returned list is always the primary method
         context whereas the rest are all auxiliary method contexts.
         """
-
         call_handles = self.get_call_handles(ctx)
         if len(call_handles) == 0:
             raise ResourceNotFoundError(ctx.method_request_string)

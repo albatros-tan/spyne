@@ -173,6 +173,7 @@ class XmlSchema(InterfaceDocumentBase):
 
         elements = self.get_schema_info(pref_tns).elements
         schema_root = self.schema_dict[pref_tns]
+
         for method in missing_methods():
             name = method.in_message.Attributes.sub_name
             if name is None:
@@ -263,9 +264,9 @@ class XmlSchema(InterfaceDocumentBase):
 
     def add_element(self, cls, node):
         pref = cls.get_element_name_ns(self.interface).split(":")[0]
-
         schema_info = self.get_schema_info(pref)
         name = cls.Attributes.sub_name or cls.get_type_name()
+        #node.set('name', 'parameter')
         schema_info.elements[name] = node
 
     def add_simple_type(self, cls, node):

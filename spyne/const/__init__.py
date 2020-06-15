@@ -76,6 +76,9 @@ WARN_ON_DUPLICATE_FAULTCODE = True
 """Warn about duplicate faultcodes in all Fault subclasses globally. Only works
 when CODE class attribute is set for every Fault subclass."""
 
+DEFAULT_PREFIX_NAMESPACE = 'tns'
+"""prefix to namespace in wsdl, example: tns:OurNameSpace"""
+
 
 def add_request_suffix(string):
     """Concatenates REQUEST_SUFFIX to end of string"""

@@ -30,6 +30,7 @@ from spyne.error import Fault, Redirect, RespawnError, InvalidRequestError
 from spyne.interface import Interface
 from spyne.util import six
 from spyne.util.appreg import register_application
+from spyne.const import DEFAULT_PREFIX_NAMESPACE
 
 
 class MethodAlreadyExistsError(Exception):
@@ -96,13 +97,20 @@ class Application(object):
 
     transport = None
 
-    def __init__(self, services, tns, name=None,
+    def __init__(self, services, tns, name=None, prefix_namespace=None, names_parts_in_messages=None,
                   in_protocol=None, out_protocol=None, config=None, classes=()):
         self.services = tuple(services)
         self.tns = tns
         self.name = name
         self.config = config
         self.classes = classes
+
+        self.names_parts_in_messages = names_parts_in_messages
+
+        if prefix_namespace is None:
+            self.prefix_namespace = DEFAULT_PREFIX_NAMESPACE
+        else:
+            self.prefix_namespace = prefix_namespace
 
         if self.name is None:
             self.name = self.__class__.__name__.split('.')[-1]
@@ -301,6 +309,7 @@ class Application(object):
 
     def check_unique_method_keys(self):
         keys = {}
+        #import ipdb; ipdb.set_trace()
         for s in self.services:
             for mdesc in s.public_methods.values():
                 other_mdesc = keys.get(mdesc.internal_key, None)

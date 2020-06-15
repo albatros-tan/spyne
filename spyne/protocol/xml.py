@@ -413,7 +413,7 @@ class XmlDocument(SubXmlBase):
 
             xml_schema = XmlSchema(value.interface)
             xml_schema.build_validation_schema()
-
+            
             self.validation_schema = xml_schema.validation_schema
 
     def __validate_lxml(self, payload):
@@ -455,7 +455,6 @@ class XmlDocument(SubXmlBase):
 
     def from_element(self, ctx, cls, element):
         cls_attrs = self.get_cls_attrs(cls)
-
         if bool(element.get(XSI('nil'))):
             if self.validator is self.SOFT_VALIDATION and not \
                                                              cls_attrs.nillable:

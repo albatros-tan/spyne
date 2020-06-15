@@ -105,6 +105,12 @@ class Wsdl11(XmlSchema):
         self.__wsdl = None
         self.validation_schema = None
 
+        self.names_parts_in_messages = None
+
+        if not interface is None:
+            _app = interface.get_app()
+            self.names_parts_in_messages = _app.names_parts_in_messages
+
     def _get_binding_name(self, port_type_name):
         return port_type_name # subclasses override to control port names.
 
@@ -324,14 +330,10 @@ class Wsdl11(XmlSchema):
 
             for obj in objs:
                 part = SubElement(message, WSDL11("part"))
-                #part.set('name', obj.get_wsdl_part_name())
-                part.set('name', "parameter")
-                text = f"{obj.get_element_name_ns(self.interface)}Request"
-                #text = f"{obj.get_wsdl_part_name()}Request"
-                
-                text = text.replace("ResponseRequest", "Response")
-
-                part.set('element', text)
+                name = self.names_parts_in_messages
+                #name = obj.get_wsdl_part_name() if self.names_parts_in_messages is None else 
+                part.set('name', obj.get_wsdl_part_name() if name is None else name)
+                part.set('element', obj.get_element_name_ns(self.interface))
 
     def add_messages_for_methods(self, service, root, messages):
         for method in service.public_methods.values():

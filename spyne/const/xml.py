@@ -23,6 +23,7 @@ namespace prefixes, namespace values and schema uris.
 
 NS_XML = 'http://www.w3.org/XML/1998/namespace'
 NS_XSD = 'http://www.w3.org/2001/XMLSchema'
+#NS_XSD = 'er-common.xsd'
 NS_XSI = 'http://www.w3.org/2001/XMLSchema-instance'
 NS_WSA = 'http://schemas.xmlsoap.org/ws/2003/03/addressing'
 NS_XOP = 'http://www.w3.org/2004/08/xop/include'

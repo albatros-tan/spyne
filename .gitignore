@@ -1,6 +1,7 @@
 .data
 .cache
 .eggs
+.DS_Store
 
 # python cruft
 *.pyc

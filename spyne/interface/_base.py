@@ -58,7 +58,6 @@ class Interface(object):
     def set_app(self, value):
         assert self.__app is None, "One interface instance can belong to only " \
                                    "one application instance."
-
         self.__app = value
         self.reset_interface()
         self.populate_interface()
@@ -82,9 +81,9 @@ class Interface(object):
         self.nsmap = dict(namespace.NSMAP)
         self.prefmap = dict(namespace.PREFMAP)
         self.member_methods = deque()
-
-        self.nsmap['tns'] = self.get_tns()
-        self.prefmap[self.get_tns()] = 'tns'
+        prefix_ns = self.app.prefix_namespace
+        self.nsmap[prefix_ns] = self.get_tns()
+        self.prefmap[self.get_tns()] = prefix_ns
         self.deps = defaultdict(set)
 
     def has_class(self, cls):
@@ -260,6 +259,8 @@ class Interface(object):
         if val is None:
             val = self.service_method_map[method_key] = []
 
+        #import ipdb; ipdb.set_trace()
+
         if len(val) == 0:
             val.append(method)
 
@@ -325,6 +326,7 @@ class Interface(object):
         # populate call routes for service methods
         for s in self.services:
             self.service_attrs[s]['tns'] = self.get_tns()
+            #self.service_attrs[s]['m'] = self.get_tns()
             logger.debug("populating '%s.%s' routes...", s.__module__,
                                                                      s.__name__)
             for method in s.public_methods.values():
@@ -386,6 +388,7 @@ class Interface(object):
 
         else:
             pref = self.prefmap[ns]
+        #import ipdb; ipdb.set_trace()
 
         return pref
 
@@ -530,6 +533,7 @@ class InterfaceDocumentBase(object):
     """
 
     def __init__(self, interface):
+        self.import_base_namespaces=True
         self.interface = interface
         self.event_manager = EventManager(self)
 
