@@ -267,7 +267,6 @@ class Wsdl11(XmlSchema):
             for port_type_name in port_type_list:
                 port_type = self._get_or_create_port_type(port_type_name)
                 port_type.set('name', port_type_name)
-
                 binding_name = self._get_binding_name(port_type_name)
                 port_binding_names.append((port_type_name, binding_name))
 
@@ -291,16 +290,21 @@ class Wsdl11(XmlSchema):
             if method.doc is not None:
                 operation.append(E(WSDL11("documentation"), method.doc))
 
-            operation.set('parameterOrder', method.in_message.get_element_name())
+            if service.include_parameterOrder:
+                operation.set('parameterOrder', method.in_message.get_element_name())
 
             op_input = SubElement(operation, WSDL11("input"))
-            op_input.set('name', method.in_message.get_element_name())
+
+            if service.include_port_operation_input_name:
+                op_input.set('name', method.in_message.get_element_name())
+
             op_input.set('message',
                           method.in_message.get_element_name_ns(self.interface))
 
             if (not method.is_callback) and (not method.is_async):
                 op_output = SubElement(operation, WSDL11("output"))
-                op_output.set('name', method.out_message.get_element_name())
+                if service.include_port_operation_output_name:
+                    op_output.set('name', method.out_message.get_element_name())
                 op_output.set('message', method.out_message.get_element_name_ns(
                                                                 self.interface))
 
@@ -381,7 +385,8 @@ class Wsdl11(XmlSchema):
 
             # get input
             input = SubElement(operation, WSDL11("input"))
-            input.set('name', method.in_message.get_element_name())
+            if service.include_binding_operation_input_name:
+                input.set('name', method.in_message.get_element_name())
 
             soap_body = SubElement(input, input_binding_ns("body"))
             soap_body.set('use', 'literal')
@@ -413,7 +418,8 @@ class Wsdl11(XmlSchema):
 
             if not (method.is_async or method.is_callback):
                 output = SubElement(operation, WSDL11("output"))
-                output.set('name', method.out_message.get_element_name())
+                if service.include_binding_operation_output_name:
+                    output.set('name', method.out_message.get_element_name())
 
                 soap_body = SubElement(output, output_binding_ns("body"))
                 soap_body.set('use', 'literal')

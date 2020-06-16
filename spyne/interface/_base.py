@@ -157,7 +157,7 @@ class Interface(object):
         :param method: A :class:`MethodDescriptor` instance
         :returns: Sequence of :class:`spyne.model.ModelBase` subclasses.
         """
-
+        
         if not (method.in_header is None):
             if not isinstance(method.in_header, (list, tuple)):
                 method.in_header = (method.in_header,)
@@ -470,6 +470,7 @@ class Interface(object):
                         self.imports[ns].add(child_ns)
                         logger.debug("    importing %r to %r for %s.%s(%r)",
                                     child_ns, ns, v.get_type_name(), k, v.type)
+
 
             if cls.Attributes.methods is not None:
                 logger.debug("    populating member methods for '%s.%s'...",

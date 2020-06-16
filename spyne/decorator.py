@@ -87,6 +87,7 @@ def _produce_input_message(f, params, in_message_name, in_variable_names,
 
     in_params = TypeInfo()
     from spyne import SelfReference
+    
     for k, v in zip(argnames, params):
         try:
             is_self_ref = issubclass(v, SelfReference)

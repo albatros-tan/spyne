@@ -245,6 +245,11 @@ class Service(ServiceBaseBase):
             Called by the transport right before passing the exception string to
             the client.
     """
+    include_parameterOrder = True
+    include_binding_operation_input_name = True
+    include_binding_operation_output_name = True
+    include_port_operation_input_name = True
+    include_port_operation_output_name = True
 
 
 # FIXME: To be deleted in Spyne 3
